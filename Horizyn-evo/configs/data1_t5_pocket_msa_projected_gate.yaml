@@ -1,0 +1,77 @@
+# data1 experiment: projected gated ProtT5 + pocket-only MSA fusion.
+#
+# Protein input layout:
+#   [ProtT5 1024 | pocket MSA 768 | MSA mask 1]
+#
+# Pocket MSA features are pooled from data1/msa_node_feature.pt. Missing pocket
+# MSA entries use mask=0 and fall back to the ProtT5 path.
+
+seed: 42
+
+logging:
+  log_dir: logs
+  checkpoint_dir: checkpoints/data1_t5_pocket_msa_projected_gate
+  save_every_n_epochs: 10
+  log_every_n_steps: 1
+
+data:
+  train_pairs_path: data/data1_horizyn/train_pairs.csv
+  test_pairs_path: data/data1_horizyn/valid_pairs.csv
+  train_reactions_path: data/data1_horizyn/train_rxns.csv
+  test_reactions_path: data/data1_horizyn/valid_rxns.csv
+  protein_embeds_path: data/data1_horizyn/prots_t5_pocket_msa.h5
+
+  train_batch_size: 16384
+  retrieval_batch_size: 128
+  num_workers: 8
+  pin_memory: false
+
+  rdkit_fp_dim: 1024
+  drfp_dim: 1024
+
+  standardize_reactions: true
+  standardize_hypervalent: true
+  standardize_remove_hs: true
+  standardize_kekulize: false
+  standardize_uncharge: true
+  standardize_metals: true
+  standardize_error_policy: warn_original
+  fingerprint_error_policy: zero
+
+model:
+  name: DualContrastiveModel
+  query_encoder_dims: [2048, 4096, 4096, 512]
+
+  target_encoder_name: ProjectedGatedT5MSAEncoder
+  target_encoder_dims: [1793, 4096, 4096, 512]
+  target_t5_dim: 1024
+  target_msa_dim: 768
+  target_fusion_dim: 1024
+
+  target_msa_projection_hidden_dim: 2048
+  target_msa_gate_hidden_dim: 1024
+  target_msa_gate_type: vector
+  target_msa_gate_bias_init: -3.0
+  target_msa_alignment_loss_weight: 0.05
+  target_msa_gate_l1_weight: 0.001
+  target_msa_projection_dropout: 0.1
+
+  embedding_dim: 512
+
+training:
+  max_epochs: 100
+  learning_rate: 0.0001
+  weight_decay: 0.01
+
+  loss:
+    name: FullBatchMLNCELoss
+    beta: 10.0
+    learn_beta: false
+    beta_min: 0.01
+    beta_max: 100.0
+
+  metrics:
+    top_k: [1, 3, 5, 10, 100]
+
+  check_val_every_n_epoch: 5
+  enable_progress_bar: true

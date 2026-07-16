@@ -1,0 +1,26 @@
+model: 'EnzymeCAGE'
+interaction_method: 'geo-enhanced-interaction'
+rxn_inner_interaction: True
+pocket_inner_interaction: True
+use_prods_info: False
+use_structure: True
+use_drfp: True
+use_esm: True
+use_msa: True
+use_msa_mean: True
+use_msa_node: True
+esm_model: ESM-C_600M
+batch_size: 256
+model_list: ['best_model.pth']
+
+data_path: ./dataset/internal-test-set/Orphan-335/Orphan-335_retrievel_cands.csv
+ckpt_dir: ./checkpoints/pretrain/seed_42
+
+rxn_fp: dataset/RHEA/2025-02-05/feature/reaction/drfp/rxn2fp.pkl
+mol_conformation: dataset/RHEA/2025-02-05/feature/reaction/molecule_conformation
+reaction_center: dataset/RHEA/2025-02-05/feature/reaction/reacting_center/reacting_center.pkl
+protein_gvp_feat: dataset/RHEA/2025-02-05/feature/protein/gvp_feature/gvp_protein_feature.pt
+esm_mean_feature: dataset/RHEA/2025-02-05/feature/protein/ESM-C_600M/protein_level/seq2feature.pkl
+esm_node_feature: dataset/RHEA/2025-02-05/feature/protein/ESM-C_600M/pocket_node_feature/esm_node_feature.pt
+msa_mean_feature: dataset/RHEA/2025-02-05/feature/protein/MSA_Transformer/protein_level/seq2feature.pkl
+msa_node_feature: dataset/RHEA/2025-02-05/feature/protein/MSA_Transformer/pocket_node_feature/msa_node_feature.pt

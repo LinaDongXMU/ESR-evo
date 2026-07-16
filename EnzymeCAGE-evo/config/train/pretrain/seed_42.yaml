@@ -1,0 +1,35 @@
+model: EnzymeCAGE
+interaction_method: geo-enhanced-interaction
+rxn_inner_interaction: true
+pocket_inner_interaction: true
+use_prods_info: false
+use_structure: true
+use_drfp: true
+use_esm: true
+use_msa: true
+use_msa_mean: true
+use_msa_node: true
+esm_model: ESM-C_600M
+
+seed: 42
+num_epochs: 20
+lr_init: 0.0003
+batch_size: 256
+use_gradient_accumulation: false
+weight_col: null
+label_column_name: Label
+
+train_path: dataset/training/train.csv
+valid_path: dataset/training/valid.csv
+test_path: dataset/training/valid.csv
+ckpt_dir: checkpoints/pretrain/seed_42
+pretrain_model: null
+
+rxn_fp: dataset/RHEA/2025-02-05/feature/reaction/drfp/rxn2fp.pkl
+mol_conformation: dataset/RHEA/2025-02-05/feature/reaction/molecule_conformation
+reaction_center: dataset/RHEA/2025-02-05/feature/reaction/reacting_center/reacting_center.pkl
+protein_gvp_feat: dataset/RHEA/2025-02-05/feature/protein/gvp_feature/gvp_protein_feature.pt
+esm_mean_feature: dataset/RHEA/2025-02-05/feature/protein/ESM-C_600M/protein_level/seq2feature.pkl
+esm_node_feature: dataset/RHEA/2025-02-05/feature/protein/ESM-C_600M/pocket_node_feature/esm_node_feature.pt
+msa_mean_feature: dataset/RHEA/2025-02-05/feature/protein/MSA_Transformer/protein_level/seq2feature.pkl
+msa_node_feature: dataset/RHEA/2025-02-05/feature/protein/MSA_Transformer/pocket_node_feature/msa_node_feature.pt
