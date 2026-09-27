@@ -4,6 +4,7 @@ ESR-evo is an evolutionary augmentation framework for reaction-conditioned enzym
 
 ![ESR-evo framework](fig.png)
 
+
 ## Method
 
 Candidate sequences are searched against UniRef90 with MMseqs2. The resulting MSAs are encoded with MSA Transformer to obtain residue-level evolutionary representations. Two complementary views are derived:
@@ -12,6 +13,7 @@ Candidate sequences are searched against UniRef90 with MMseqs2. The resulting MS
 - **Pocket MSA features:** residue-level representations restricted to the predicted catalytic pocket.
 
 These features augment two reaction-conditioned recommendation backbones, EnzymeCAGE and Horizyn. The implementations support individual evolutionary views and their joint use through learned gated fusion.
+
 
 ## MSA Feature Pipeline
 
@@ -24,6 +26,7 @@ per-protein A3M files
     -> run_msa_feature.py
 full-sequence and pocket MSA Transformer features
 ```
+
 
 ### Environment
 
@@ -110,6 +113,7 @@ msa/features/
 
 `seq2feature.pkl` maps full protein sequences to 768-dimensional mean-pooled representations. `msa_node_feature.pt` maps protein identifiers to residue-level pocket representations. These two files are shared by the EnzymeCAGE and Horizyn workflows.
 
+
 ## Evaluation
 
 Experiments use two complementary benchmarks:
@@ -118,6 +122,7 @@ Experiments use two complementary benchmarks:
 - **Orphan-335:** enzyme retrieval for orphan reactions.
 
 The repository contains the code and configurations for the three evolutionary variants used with each backbone: full-sequence MSA, pocket MSA, and their combination.
+
 
 ## Repository Structure
 
