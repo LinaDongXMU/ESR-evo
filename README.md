@@ -141,3 +141,7 @@ Reproduction instructions are provided for [EnzymeCAGE-evo](EnzymeCAGE-evo/READM
 ## License
 
 Each backbone retains its original license; see the `LICENSE` file in the corresponding subdirectory.
+
+## Citation
+
+DOI: 10.1021/acs.jcim.6c03384
